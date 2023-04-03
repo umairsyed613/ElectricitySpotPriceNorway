@@ -5,7 +5,7 @@ import schedule
 import json
 
 app = Flask(__name__)
-CORS(app, resources={r"/*": {"origins": "http://127.0.0.1:5500;https://umairsyed613.github.io"}})
+CORS(app, resources={r"/*": {"origins": "http://127.0.0.1:5500, https://umairsyed613.github.io"}})
 
 @app.route('/gettodayprices', methods=['GET'])
 def gettodayprices():
