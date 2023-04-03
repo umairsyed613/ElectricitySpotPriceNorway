@@ -14,13 +14,24 @@
 </head>
 
 <body>
-    <div class="m-3">
+    <div class="d-flex flex-row flex-row-reverse mx-3 mt-2">
+        <button id="refresh-button" type="button" class="btn btn-outline-info">Refresh Data</button>
+    </div>
+    <div class="mx-3 mb-3">
         <canvas id="myChart"></canvas>
     </div>
 
     <script>
+        document.getElementById("refresh-button").addEventListener("click", function() {
+            // Make an API call when the button is clicked
+            fetch("http://127.0.0.1:5000/run_job")
+                .then(response => response.json())
+                .then(data => console.log(data))
+                .catch(error => console.error(error));
+        });
+
         // Fetch data from API
-        fetch('data.json')
+        fetch('http://127.0.0.1:5000/gettodayprices')
             .then(response => response.json())
             .then(data => {
                 // Process data into arrays for chart
