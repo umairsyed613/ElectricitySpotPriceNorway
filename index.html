@@ -40,7 +40,7 @@
                     data: {
                         labels: labels,
                         datasets: [{
-                            label: 'Price: ',
+                            label: 'Prices',
                             data: values,
                             pointRadius: 8,
                             pointHoverRadius: 15,
@@ -78,16 +78,16 @@
                             },
 
                             tooltip: {
-                                titleFontSize: 16,
-                                bodyFontSize: 14,
+                                bodyFont: {
+                                    size: 20
+                                },
                                 callbacks: {
                                     label: function(context) {
                                         // Format the tooltip label
                                         const value = context.parsed.y;
                                         const label = context.chart.data.labels[context.dataIndex];
                                         const formattedValue = value.toFixed(2);
-                                        const s = `${label}: ${formattedValue}`;
-                                        console.log(s);
+                                        const s = `${formattedValue} NOK`;
                                         return s;
                                     }
                                 }
