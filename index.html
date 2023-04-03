@@ -17,8 +17,17 @@
     <div class="d-flex flex-row flex-row-reverse mx-3 mt-2">
         <button id="refresh-button" type="button" class="btn btn-outline-info">Refresh Data</button>
     </div>
-    <div class="mx-3 mb-3">
-        <canvas id="myChart"></canvas>
+    <div class="d-flex flex-row">
+        <div class="w-25 px-3">
+            <div class="mt-5 d-flex flex-column align-items-center">
+                <span style="font-size: 1.2rem;">Price Now</span>
+                <span id="price-now" style="font-size: 2rem;">0.00 NOK</span>
+            </div>
+        </div>
+        <div class="w-75">
+            <canvas id="myChart" width="600" height="400"></canvas>
+        </div>
+
     </div>
 
     <script>
@@ -34,10 +43,11 @@
         fetch('https://electricityspotpriceno.onrender.com/gettodayprices')
             .then(response => response.json())
             .then(data => {
+                const pricenow = document.getElementById("price-now");
                 // Process data into arrays for chart
                 //console.log(data[0]);
                 const currentHour = new Date().getHours();
-                //console.log(currentHour);
+                console.log(currentHour);
                 var dd = data[0];
                 const today = new Date().toISOString().slice(0, 10);
                 //console.log(today);
@@ -46,7 +56,9 @@
                 //console.log(filteredData);
                 const labels = filteredData.map(d => moment(d.Date).format('HH:mm'));
                 const values = filteredData.map(d => d.Value);
-
+                const cv = filteredData.filter(f => new Date(f.Date).getHours() === currentHour);
+                console.log(cv[0]);
+                pricenow.textContent = cv[0].Value.toFixed(2) + ' NOK';
                 // Create chart
                 const ctx = document.getElementById('myChart').getContext('2d');
                 const chart = new Chart(ctx, {
