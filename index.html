@@ -17,7 +17,7 @@
 
     <script>
         // Fetch data from API
-        fetch('https://prod-publicservices.azurewebsites.net/api/spotprices/ts/auto')
+        fetch('data.json')
             .then(response => response.json())
             .then(data => {
                 // Process data into arrays for chart
