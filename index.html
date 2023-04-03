@@ -23,7 +23,7 @@
                 // Process data into arrays for chart
                 //console.log(data[0]);
                 const currentHour = new Date().getHours();
-                console.log(currentHour);
+                //console.log(currentHour);
                 var dd = data[0];
                 const today = new Date().toISOString().slice(0, 10);
                 //console.log(today);
@@ -40,44 +40,59 @@
                     data: {
                         labels: labels,
                         datasets: [{
-                            label: 'Price per hour ' + today,
+                            label: 'Price: ',
                             data: values,
-                            pointRadius: labels.map(item => {
-                                const hour = item.slice(12, 14);
-                                console.log(hour + '\n');
-                                return hour === currentHour ? 8 : 4;
-                            }),
+                            pointRadius: 8,
+                            pointHoverRadius: 15,
                             fill: true,
                             borderColor: 'rgb(75, 192, 192)',
                             tension: 0.1
                         }]
                     },
                     options: {
+                        responsive: true,
                         scales: {
-                            xAxes: [{
-                                type: 'category',
-                                gridLines: {
-                                    display: false
-                                }
-                                // scaleLabel: {
-                                //     display: true,
-                                //     labelString: 'Date'
-                                // }
-                            }],
-                            yAxes: [{
-                                scaleLabel: {
+                            x: {
+                                display: true,
+                                title: {
                                     display: true,
-                                    labelString: 'Value'
-                                },
-                                gridLines: {
-                                    display: false
+                                    text: 'Hour'
                                 }
-                            }]
+                            },
+                            y: {
+                                display: true,
+                                title: {
+                                    display: true,
+                                    text: 'Price'
+                                }
+                            }
+
                         },
-                        legend: {
-                            display: true
-                        },
-                        responsive: true
+
+                        plugins: {
+                            legend: {
+                                title: {
+                                    display: true,
+                                    text: 'Price per hour ' + today
+                                }
+                            },
+
+                            tooltip: {
+                                titleFontSize: 16,
+                                bodyFontSize: 14,
+                                callbacks: {
+                                    label: function(context) {
+                                        // Format the tooltip label
+                                        const value = context.parsed.y;
+                                        const label = context.chart.data.labels[context.dataIndex];
+                                        const formattedValue = value.toFixed(2);
+                                        const s = `${label}: ${formattedValue}`;
+                                        console.log(s);
+                                        return s;
+                                    }
+                                }
+                            }
+                        }
                     }
                 });
             });
