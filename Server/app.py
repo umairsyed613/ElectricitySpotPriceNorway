@@ -3,12 +3,17 @@ from flask import Flask, jsonify
 from flask_cors import CORS
 import schedule
 import json
+import os.path
 
 app = Flask(__name__)
 CORS(app, resources={r"/*": {"origins": ["http://127.0.0.1:5500", "https://umairsyed613.github.io"]}})
 
 @app.route('/gettodayprices', methods=['GET'])
 def gettodayprices():
+    check_file = os.path.isfile("/data.json")
+    if not check_file:
+       daily_job()
+
     with open('data.json', 'rb') as openfile:
         data = json.load(openfile)
     return jsonify(data)
